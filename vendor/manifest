@@ -1,0 +1,17 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/codegangsta/cli",
+			"repository": "https://github.com/codegangsta/cli",
+			"revision": "aca5b047ed14d17224157c3434ea93bf6cdaadee",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/karamani/iostreams",
+			"repository": "https://github.com/karamani/iostreams",
+			"revision": "8a235d3a902a18b7af5ed61435784f0a88ecbe74",
+			"branch": "master"
+		}
+	]
+}
