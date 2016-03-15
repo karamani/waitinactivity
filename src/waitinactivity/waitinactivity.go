@@ -39,6 +39,7 @@ func main() {
 		timeout := time.Second * time.Duration(timeoutArg)
 		timer := time.NewTimer(timeout)
 
+		chanEOF := make(chan bool)
 		streamActivity := make(chan bool)
 
 		go func() {
@@ -53,7 +54,7 @@ func main() {
 				log.Panicln(err.Error())
 			}
 
-			os.Exit(1)
+			chanEOF <- true
 		}()
 
 		for {
@@ -63,6 +64,9 @@ func main() {
 			case <-timer.C:
 				log.Println("timeout")
 				fmt.Println("timeout")
+			case <-chanEOF:
+				log.Println("eof")
+				return
 			}
 			timer.Reset(timeout)
 		}
