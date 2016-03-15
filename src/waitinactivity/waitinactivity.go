@@ -15,10 +15,6 @@ var (
 	timeoutArg int
 )
 
-func inti() {
-	log.SetFlags(log.LstdFlags)
-}
-
 func main() {
 
 	app := cli.NewApp()
@@ -40,11 +36,12 @@ func main() {
 	app.Action = func(c *cli.Context) {
 
 		timeout := time.Second * time.Duration(timeoutArg)
-		t := time.NewTimer(timeout)
+		timer := time.NewTimer(timeout)
 
 		streamActivity := make(chan bool)
 
 		process := func(row []byte) error {
+			debug(string(row))
 			streamActivity <- true
 			return nil
 		}
@@ -60,12 +57,19 @@ func main() {
 			select {
 			case <-streamActivity:
 				log.Println("activity")
-			case <-t.C:
+			case <-timer.C:
+				log.Println("timeout")
 				fmt.Println("timeout")
 			}
-			t.Reset(timeout)
+			timer.Reset(timeout)
 		}
 	}
 
 	app.Run(os.Args)
+}
+
+func debug(msg string) {
+	if debugMode {
+		log.Println(msg)
+	}
 }
