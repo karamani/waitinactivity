@@ -30,6 +30,7 @@ func main() {
 		cli.IntFlag{
 			Name:        "timeout",
 			Usage:       "timeout in seconds",
+			Value:       1,
 			Destination: &timeoutArg,
 		},
 	}
@@ -40,16 +41,18 @@ func main() {
 
 		streamActivity := make(chan bool)
 
-		process := func(row []byte) error {
-			debug(string(row))
-			streamActivity <- true
-			return nil
-		}
-
 		go func() {
+
+			process := func(row []byte) error {
+				debug(string(row))
+				streamActivity <- true
+				return nil
+			}
+
 			if err := iostreams.ReadStdin(process); err != nil {
 				log.Panicln(err.Error())
 			}
+
 			os.Exit(1)
 		}()
 
