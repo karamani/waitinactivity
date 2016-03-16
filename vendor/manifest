@@ -10,7 +10,7 @@
 		{
 			"importpath": "github.com/karamani/iostreams",
 			"repository": "https://github.com/karamani/iostreams",
-			"revision": "9f7202a3f3e5dfae156ec76951c044565c526781",
+			"revision": "1f6c76b5ac3d8f137055c90ce32630aa0b013dd5",
 			"branch": "master"
 		}
 	]

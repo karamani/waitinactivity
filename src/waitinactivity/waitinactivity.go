@@ -40,26 +40,19 @@ func main() {
 		timer := time.NewTimer(timeout)
 
 		chanEOF := make(chan bool)
-		streamActivity := make(chan bool)
+		streamActivity := make(chan []byte)
 
 		go func() {
-
-			process := func(row []byte) error {
-				debug(string(row))
-				streamActivity <- true
-				return nil
-			}
-
-			if err := iostreams.ReadStdin(process); err != nil {
+			if err := iostreams.ChanStdin(streamActivity); err != nil {
 				log.Panicln(err.Error())
 			}
-
 			chanEOF <- true
 		}()
 
 		for {
 			select {
-			case <-streamActivity:
+			case msg := <-streamActivity:
+				debug(string(msg))
 				log.Println("activity")
 			case <-timer.C:
 				log.Println("timeout")
