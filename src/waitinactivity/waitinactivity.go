@@ -24,7 +24,6 @@ func main() {
 		cli.BoolFlag{
 			Name:        "debug",
 			Usage:       "debug mode",
-			EnvVar:      "SEQREQUEST_DEBUG",
 			Destination: &debugMode,
 		},
 		cli.IntFlag{
